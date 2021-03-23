@@ -1,24 +1,57 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+## users テーブル
 
-* Ruby version
+| Column     | Type   | Options     |
+| ---------- | ------ | ----------- |
+| email      | string | null: false |
+| password   | string | null: false |
+| name       | string | null: false |
 
-* System dependencies
 
-* Configuration
+### Association
 
-* Database creation
+- has_many :items
+- has_many :buys
 
-* Database initialization
 
-* How to run the test suite
+## items テーブル
 
-* Services (job queues, cache servers, search engines, etc.)
+| Column     | Type       | Options                        |
+| ---------- | ---------- | ------------------------------ |
+| title      | text       | null: false                    |
+| value      | text       | null: false                    |
+| image      | text       | null: false                    |
+| user       | references | null: false, foreign_key: true |
 
-* Deployment instructions
+### Association
 
-* ...
+- has_many :buys
+- belongs_to :user
+
+
+
+## buys テーブル
+
+| Column    | Type       | Options                        |
+| --------- | ---------- | ------------------------------ |
+| user      | references | null: false, foreign_key: true |
+| item      | references | null: false, foreign_key: true |
+
+### Association
+
+- has_one :customer
+- belongs_to :user
+- belongs_to :item
+
+##  customer テーブル
+
+| Column            | Type       | Options                        |
+| ----------------- | ---------- | ------------------------------ |
+| address           | text       | null: false                    |
+| buy               | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :buy
