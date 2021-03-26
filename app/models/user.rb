@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  has_many :items
+
+
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
   with_options presence: true do
     validates :nick_name                             
@@ -15,6 +18,7 @@ class User < ApplicationRecord
     end   
 
   end
+  
   
 
   
