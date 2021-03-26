@@ -55,8 +55,20 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Value must be less than or equal to 9999999")
       end
 
-      it '価格は半角数字の入力でしか出品できない' do
+      it '価格は全角文字では出品できない' do
         @item.value = '１４５６'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Value is not a number")
+      end
+
+      it '価格は半角英数混合では出品できない' do
+        @item.value = '1345ad'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Value is not a number")
+      end
+
+      it '価格は半角英語だけでは出品できない' do
+        @item.value = 'abcdefg'
         @item.valid?
         expect(@item.errors.full_messages).to include("Value is not a number")
       end
@@ -95,27 +107,8 @@ RSpec.describe Item, type: :model do
 
       end
 
-
-
-
-
     end
 
-
-
-
-
-
-  
-
-
-
-
-
-
-
   end
-
-
   #pending "add some examples to (or delete) #{__FILE__}"
 end
