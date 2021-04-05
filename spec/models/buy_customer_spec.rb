@@ -23,6 +23,19 @@ RSpec.describe BuyCustomer, type: :model do
     end
 
     context '内容に問題がある場合' do
+
+      it 'user_idが空だと保存できないこと' do
+        @buy_customer.user_id = nil
+        @buy_customer.valid?
+        expect(@buy_customer.errors.full_messages).to include("User can't be blank")
+      end
+
+      it 'item_idが空だと保存できないこと' do
+        @buy_customer.item_id = nil
+        @buy_customer.valid?
+        expect(@buy_customer.errors.full_messages).to include("Item can't be blank")
+      end
+
       it '郵便番号が空だと保存できないこと' do
         @buy_customer.postal_code = ''
         @buy_customer.valid?
