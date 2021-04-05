@@ -9,7 +9,10 @@ class BuyCustomer
     validates :municipalities
     validates :address
     validates :tel_number,  length: { maximum: 11}
+    validates :tel_number,numericality: { only_integer: true }  
     validates :token
+    validates :user_id
+    validates :item_id
   end
 
   def save

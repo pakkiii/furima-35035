@@ -13,6 +13,13 @@ RSpec.describe BuyCustomer, type: :model do
       it 'すべての値が正しく入力されていれば保存できること' do
         expect(@buy_customer).to be_valid
       end
+
+      it '建物名が抜けていても保存できること' do
+        @buy_customer.build_name = ''
+        expect(@buy_customer).to be_valid
+      end
+
+
     end
 
     context '内容に問題がある場合' do
@@ -20,6 +27,12 @@ RSpec.describe BuyCustomer, type: :model do
         @buy_customer.postal_code = ''
         @buy_customer.valid?
         expect(@buy_customer.errors.full_messages).to include("Postal code can't be blank")
+      end
+
+      it '郵便番号にハイフンが無いと保存できないこと' do
+        @buy_customer.postal_code = '3337645'
+        @buy_customer.valid?
+        expect(@buy_customer.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
       end
 
 
@@ -55,6 +68,18 @@ RSpec.describe BuyCustomer, type: :model do
         expect(@buy_customer.errors.full_messages).to include("Tel number can't be blank")
       end
 
+
+      it '電話番号は12桁以上では保存できないこと' do
+        @buy_customer.tel_number = '123456789075'
+        @buy_customer.valid?
+        expect(@buy_customer.errors.full_messages).to include("Tel number is too long (maximum is 11 characters)")
+      end
+
+      it '電話番号は英数字混合では保存できないこと' do
+        @buy_customer.tel_number = '1234567abcd'
+        @buy_customer.valid?
+        expect(@buy_customer.errors.full_messages).to include("Tel number is not a number")
+      end
       
       
     end
