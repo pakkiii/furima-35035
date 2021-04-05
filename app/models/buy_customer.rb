@@ -8,8 +8,7 @@ class BuyCustomer
     validates :place_id, numericality: {other_than: 0}
     validates :municipalities
     validates :address
-    validates :tel_number,  length: { maximum: 11}
-    validates :tel_number,numericality: { only_integer: true }  
+    validates :tel_number, format: {with: /\A\d{10,11}\z/} 
     validates :token
     validates :user_id
     validates :item_id

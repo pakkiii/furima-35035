@@ -85,13 +85,13 @@ RSpec.describe BuyCustomer, type: :model do
       it '電話番号は12桁以上では保存できないこと' do
         @buy_customer.tel_number = '123456789075'
         @buy_customer.valid?
-        expect(@buy_customer.errors.full_messages).to include("Tel number is too long (maximum is 11 characters)")
+        expect(@buy_customer.errors.full_messages).to include("Tel number is invalid")
       end
 
       it '電話番号は英数字混合では保存できないこと' do
         @buy_customer.tel_number = '1234567abcd'
         @buy_customer.valid?
-        expect(@buy_customer.errors.full_messages).to include("Tel number is not a number")
+        expect(@buy_customer.errors.full_messages).to include("Tel number is invalid")
       end
       
       
