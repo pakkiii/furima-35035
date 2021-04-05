@@ -1,9 +1,9 @@
 class BuysController < ApplicationController
   before_action :authenticate_user!
   before_action :find_item, only: [:index, :create]
+  before_action :defend, only: [:index, :create]
   def index
     @buy_customer = BuyCustomer.new
-    redirect_to root_path if current_user.id == @item.user.id || @item.buy.present?
   end
 
   def create
@@ -19,6 +19,10 @@ class BuysController < ApplicationController
   end
 
   private
+
+  def defend
+    redirect_to root_path if current_user.id == @item.user.id || @item.buy.present?
+  end
 
   def find_item
     @item = Item.find(params[:item_id])
