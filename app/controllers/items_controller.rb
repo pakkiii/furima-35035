@@ -8,6 +8,9 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    if @item.buy.present?
+      redirect_to root_path
+    end
   end
 
   def update
@@ -38,6 +41,8 @@ class ItemsController < ApplicationController
     @item.destroy
     redirect_to root_path
   end
+
+  private
 
   def move_to_index
     unless current_user.id == @item.user.id
